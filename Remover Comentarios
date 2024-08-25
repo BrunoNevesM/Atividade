@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Comentários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 600px;
+        }
+        #comment-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #comment-list li {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .comment-text {
+            flex: 1;
+            margin-right: 10px;
+        }
+        button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gerenciador de Comentários</h1>
+
+    <input type="text" id="comment-input" placeholder="Digite seu comentário aqui">
+    <button id="add-comment-btn">Adicionar Comentário</button>
+
+    <ul id="comment-list">
+        <!-- Comentários serão adicionados aqui -->
+    </ul>
+
+    <script>
+     
+        const commentInput = document.getElementById('comment-input');
+        const addCommentBtn = document.getElementById('add-comment-btn');
+        const commentList = document.getElementById('comment-list');
+
+   
+        function addComment() {
+            const commentText = commentInput.value.trim();
+            if (commentText === '') {
+                alert('Por favor, digite um comentário.');
+                return;
+            }
+
+        
+            const li = document.createElement('li');
+
+     
+            const span = document.createElement('span');
+            span.className = 'comment-text';
+            span.textContent = commentText;
+
+         
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'Editar';
+            editBtn.addEventListener('click', () => editComment(span));
+
+       
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remover';
+            removeBtn.addEventListener('click', () => removeComment(li));
+
+          
+            li.appendChild(span);
+            li.appendChild(editBtn);
+            li.appendChild(removeBtn);
+
+           
+            commentList.appendChild(li);
+
+          
+            commentInput.value = '';
+        }
+
+     
+        function removeComment(commentElement) {
+            commentList.removeChild(commentElement);
+        }
+
+      
+        function editComment(commentTextElement) {
+            const newCommentText = prompt('Edite seu comentário:', commentTextElement.textContent);
+            if (newCommentText !== null && newCommentText.trim() !== '') {
+                commentTextElement.textContent = newCommentText.trim();
+            }
+        }
+
+      
+        addCommentBtn.addEventListener('click', addComment);
+    </script>
+
+</body>
+</html>
